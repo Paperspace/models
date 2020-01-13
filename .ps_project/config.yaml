@@ -1,0 +1,33 @@
+version: 2
+workflows:
+  ci-test:
+    steps:
+      -
+        name: "my experiment"
+        command: experiment.run_multi_node
+        params:
+          ports: "5000"
+          modelPath: "/artifacts"
+          modelType: "Tensorflow"
+          workerCommand: "pip install -r requirements.txt && python mnist.py"
+          workerContainer: "tensorflow/tensorflow:1.13.1-gpu-py3"
+          workerMachineType: "K80"
+          workerCount: 2
+          parameterServerCount: 1
+          parameterServerCommand: "pip install -r requirements.txt && python mnist.py"
+          parameterServerContainer: "tensorflow/tensorflow:1.13.1-py3"
+          parameterServerMachineType: "G1"
+        checks:
+          tensorflow:loss:
+            target: 0.0..1.0
+            aggregate: max
+          tensorflow:accuracy:
+            target: 0.988..1.000
+            aggregate: median
+          defaults:
+            precision: 3
+    triggers:
+      tags:
+        only: 'v.*'
+      branches:
+        only: '.*'

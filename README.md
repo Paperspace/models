@@ -1,4 +1,4 @@
-# Model Zoo for Intel® Architecture 2
+# Model Zoo for Intel® Architecture
 
 This repository contains **links to pre-trained models, sample scripts, best practices, and step-by-step tutorials** for many popular open-source machine learning models optimized by Intel to run on Intel® Xeon® Scalable processors. 
 
